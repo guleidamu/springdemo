@@ -1,17 +1,30 @@
 package com.example.businessdemo.controller;
 
 import com.example.businessdemo.entity.User;
+import com.example.businessdemo.response.Result;
 import com.example.businessdemo.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Value("${jiankang.pingan.damu}")
+    private String fileUploadDirector;
 
 
     @Autowired
@@ -85,6 +98,13 @@ public class UserController {
     @GetMapping("/getUserTest")
     public String addTest(User user){
         return "getUserTest success";
+    }
+
+
+    public Result updateFile(@RequestParam("file")MultipartFile file,@RequestParam("code") String code){
+
+        return null;
+
     }
 }
 

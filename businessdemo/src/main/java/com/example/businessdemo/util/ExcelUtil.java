@@ -2,11 +2,8 @@ package com.example.businessdemo.util;
 
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 
@@ -14,6 +11,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -161,6 +159,23 @@ public class ExcelUtil {
             cellValue = "";
         }
         return cellValue;
+    }
+
+    public static boolean existSheet(MultipartFile multipartFile,String sheetName){
+        if(multipartFile.isEmpty()){
+            return false;
+        }
+
+        try {
+            Workbook workbook = WorkbookFactory.create(multipartFile.getInputStream());
+            Sheet sheet = workbook.getSheet(sheetName);
+            if(sheet != null){
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
